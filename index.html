@@ -5,7 +5,16 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Farrarh2 News</title>
+
   <script src="https://telegram.org/js/telegram-web-app.js"></script>
+
+  <!-- Monetag SDK -->
+  <script
+    src="https://libtl.com/sdk.js"
+    data-zone="12243195"
+    data-sdk="show_12243195">
+  </script>
+
   <style>
     body {
       font-family: Arial, sans-serif;
@@ -48,6 +57,7 @@
 
   <script>
     const tg = window.Telegram?.WebApp;
+
     if (tg) {
       tg.ready();
       tg.expand();
@@ -64,6 +74,7 @@
       .then(data => {
         const entries = data.feed.entry || [];
         const container = document.getElementById("articles");
+
         document.getElementById("status").textContent =
           entries.length ? "Latest articles" : "No articles found";
 
