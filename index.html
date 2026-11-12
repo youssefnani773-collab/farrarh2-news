@@ -1,0 +1,100 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Farrarh2 News</title>
+  <script src="https://telegram.org/js/telegram-web-app.js"></script>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 20px;
+      background: #f4f5f7;
+      color: #222;
+    }
+    header {
+      background: #17212b;
+      color: white;
+      padding: 22px;
+      border-radius: 14px;
+      text-align: center;
+    }
+    .article {
+      background: white;
+      padding: 16px;
+      margin: 15px 0;
+      border-radius: 12px;
+      box-shadow: 0 2px 8px #00000012;
+    }
+    .article h2 { font-size: 18px; }
+    .article a {
+      color: #168acd;
+      text-decoration: none;
+      font-weight: bold;
+    }
+    #status { text-align: center; color: #666; }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>Farrarh2 News</h1>
+    <p>Latest news and trending stories</p>
+  </header>
+
+  <p id="status">Loading latest articles...</p>
+  <main id="articles"></main>
+
+  <script>
+    const tg = window.Telegram?.WebApp;
+    if (tg) {
+      tg.ready();
+      tg.expand();
+    }
+
+    const feedUrl =
+      "https://farrarh2.blogspot.com/feeds/posts/default?alt=json&max-results=15";
+
+    fetch(feedUrl)
+      .then(response => {
+        if (!response.ok) throw new Error("Feed unavailable");
+        return response.json();
+      })
+      .then(data => {
+        const entries = data.feed.entry || [];
+        const container = document.getElementById("articles");
+        document.getElementById("status").textContent =
+          entries.length ? "Latest articles" : "No articles found";
+
+        entries.forEach(entry => {
+          const title = entry.title.$t;
+          const link = entry.link.find(item =>
+            item.rel === "alternate"
+          )?.href;
+
+          if (!link) return;
+
+          const card = document.createElement("article");
+          card.className = "article";
+
+          const heading = document.createElement("h2");
+          heading.textContent = title;
+
+          const anchor = document.createElement("a");
+          anchor.href = link;
+          anchor.target = "_blank";
+          anchor.rel = "noopener noreferrer";
+          anchor.textContent = "Read Article";
+
+          card.append(heading, anchor);
+          container.appendChild(card);
+        });
+      })
+      .catch(() => {
+        document.getElementById("status").textContent =
+          "Unable to load articles. Please try again later.";
+      });
+  </script>
+</body>
+</html>
