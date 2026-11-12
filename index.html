@@ -4,11 +4,12 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#101d32">
   <title>Farrarh2 News</title>
 
   <script src="https://telegram.org/js/telegram-web-app.js"></script>
 
-  <!-- Monetag SDK -->
+  <!-- Monetag SDK - Keep existing zone -->
   <script
     src="https://libtl.com/sdk.js"
     data-zone="12243195"
@@ -21,91 +22,264 @@
     }
 
     body {
+      margin: 0;
+      padding: 0 0 30px;
       font-family: Arial, sans-serif;
-      margin: 0;
-      padding: 15px;
-      background: #f4f5f7;
-      color: #222;
+      background: #f3f5f9;
+      color: #17212b;
     }
 
-    header {
-      background: #17212b;
+    .top-header {
+      background: #101d32;
       color: white;
-      padding: 22px 15px;
-      border-radius: 14px;
-      text-align: center;
-      margin-bottom: 20px;
+      padding: 25px 18px 22px;
+      border-radius: 0 0 22px 22px;
     }
 
-    header h1 {
-      margin: 0 0 8px;
-      font-size: 25px;
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 11px;
     }
 
-    header p {
+    .logo {
+      width: 46px;
+      height: 46px;
+      background: #168acd;
+      border-radius: 13px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 21px;
+      font-weight: bold;
+    }
+
+    .brand h1 {
       margin: 0;
-      color: #d5e0e9;
+      font-size: 23px;
+    }
+
+    .brand p {
+      margin: 5px 0 0;
+      color: #bdc9d8;
+      font-size: 12px;
+    }
+
+    .welcome {
+      margin-top: 23px;
+    }
+
+    .welcome h2 {
+      margin: 0 0 7px;
+      font-size: 22px;
+    }
+
+    .welcome p {
+      margin: 0;
+      color: #cbd5e1;
+      font-size: 14px;
+    }
+
+    .search-area {
+      padding: 18px 15px 8px;
+    }
+
+    .search-box {
+      width: 100%;
+      border: 1px solid #e1e6ed;
+      border-radius: 12px;
+      background: white;
+      padding: 15px;
+      font-size: 15px;
+      outline: none;
+    }
+
+    .search-box:focus {
+      border-color: #168acd;
+    }
+
+    .section-heading {
+      padding: 13px 16px 10px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .section-heading h2 {
+      margin: 0;
+      font-size: 19px;
+    }
+
+    .section-heading span {
+      color: #168acd;
+      font-size: 12px;
+      font-weight: bold;
+    }
+
+    .categories {
+      display: flex;
+      gap: 9px;
+      overflow-x: auto;
+      padding: 5px 15px 14px;
+      scrollbar-width: none;
+    }
+
+    .categories::-webkit-scrollbar {
+      display: none;
+    }
+
+    .category-btn {
+      border: 1px solid #e0e5ec;
+      background: white;
+      color: #39485b;
+      border-radius: 20px;
+      padding: 9px 16px;
+      font-size: 13px;
+      white-space: nowrap;
+      cursor: pointer;
+    }
+
+    .category-btn.active {
+      background: #168acd;
+      border-color: #168acd;
+      color: white;
+    }
+
+    #status {
+      text-align: center;
+      padding: 18px;
+      color: #697586;
+      font-size: 14px;
+    }
+
+    #articles {
+      padding: 0 15px;
     }
 
     .article {
       background: white;
-      margin: 16px 0;
-      border-radius: 12px;
+      margin-bottom: 17px;
+      border-radius: 15px;
       overflow: hidden;
-      box-shadow: 0 2px 8px #00000012;
+      box-shadow: 0 3px 12px #17212b0d;
     }
 
     .article img {
       width: 100%;
-      height: 200px;
+      height: 205px;
       object-fit: cover;
       display: block;
+      background: #e7ebf0;
     }
 
     .article-content {
       padding: 15px;
     }
 
-    .article h2 {
-      font-size: 19px;
-      line-height: 1.4;
-      margin: 0 0 10px;
+    .article-category {
+      display: inline-block;
+      background: #e9f5fc;
+      color: #168acd;
+      padding: 5px 9px;
+      border-radius: 5px;
+      font-size: 11px;
+      font-weight: bold;
+      margin-bottom: 10px;
+    }
+
+    .article h3 {
+      font-size: 18px;
+      line-height: 1.45;
+      margin: 0 0 9px;
+    }
+
+    .article-date {
+      color: #8993a1;
+      font-size: 12px;
+      margin-bottom: 10px;
     }
 
     .article p {
-      color: #666;
+      color: #657184;
       font-size: 14px;
       line-height: 1.6;
-      margin: 0 0 14px;
+      margin: 0 0 15px;
     }
 
-    .article a {
+    .read-more {
       display: inline-block;
       background: #168acd;
       color: white;
-      padding: 10px 16px;
-      border-radius: 7px;
       text-decoration: none;
+      padding: 11px 17px;
+      border-radius: 8px;
+      font-size: 13px;
       font-weight: bold;
     }
 
-    #status {
+    .empty {
       text-align: center;
-      color: #666;
-      padding: 15px;
+      color: #788496;
+      padding: 30px 10px;
+    }
+
+    footer {
+      text-align: center;
+      padding: 25px 10px;
+      color: #8993a1;
+      font-size: 12px;
     }
   </style>
 </head>
 
 <body>
 
-  <header>
-    <h1>Farrarh2 News</h1>
-    <p>Latest news and trending stories</p>
+  <header class="top-header">
+    <div class="brand">
+      <div class="logo">F2</div>
+      <div>
+        <h1>Farrarh2 News</h1>
+        <p>Your daily news destination</p>
+      </div>
+    </div>
+
+    <div class="welcome">
+      <h2>Stay informed.</h2>
+      <p>Discover the latest news and trending stories.</p>
+    </div>
   </header>
+
+  <div class="search-area">
+    <input
+      id="search"
+      class="search-box"
+      type="search"
+      placeholder="Search news..."
+      aria-label="Search news">
+  </div>
+
+  <div class="section-heading">
+    <h2>Categories</h2>
+    <span>EXPLORE</span>
+  </div>
+
+  <nav id="categories" class="categories">
+    <button class="category-btn active" data-category="all">
+      All News
+    </button>
+  </nav>
+
+  <div class="section-heading">
+    <h2>Latest News</h2>
+    <span>FARRARH2</span>
+  </div>
 
   <p id="status">Loading latest articles...</p>
   <main id="articles"></main>
+
+  <footer>
+    © Farrarh2 News - All Rights Reserved
+  </footer>
 
   <script>
     const tg = window.Telegram?.WebApp;
@@ -117,105 +291,222 @@
 
     const container = document.getElementById("articles");
     const status = document.getElementById("status");
+    const search = document.getElementById("search");
+    const categories = document.getElementById("categories");
 
-    // Blogger JSONP feed
+    let allArticles = [];
+    let selectedCategory = "all";
+
+    function cleanText(html) {
+      const doc = new DOMParser().parseFromString(
+        html || "",
+        "text/html"
+      );
+
+      return (doc.body.textContent || "")
+        .replace(/\s+/g, " ")
+        .trim();
+    }
+
+    function formatDate(value) {
+      if (!value) return "";
+
+      const date = new Date(value);
+
+      if (isNaN(date.getTime())) return "";
+
+      return date.toLocaleDateString("en-US", {
+        year: "numeric",
+        month: "short",
+        day: "numeric"
+      });
+    }
+
+    function showCategories() {
+      const names = new Set();
+
+      allArticles.forEach(article => {
+        article.categories.forEach(name => names.add(name));
+      });
+
+      categories.innerHTML = "";
+
+      const allButton = document.createElement("button");
+      allButton.className = "category-btn";
+      allButton.textContent = "All News";
+      allButton.dataset.category = "all";
+      categories.appendChild(allButton);
+
+      names.forEach(name => {
+        const button = document.createElement("button");
+        button.className = "category-btn";
+        button.textContent = name;
+        button.dataset.category = name;
+        categories.appendChild(button);
+      });
+
+      updateCategoryButtons();
+    }
+
+    function updateCategoryButtons() {
+      categories.querySelectorAll(".category-btn").forEach(button => {
+        button.classList.toggle(
+          "active",
+          button.dataset.category === selectedCategory
+        );
+      });
+    }
+
+    function renderArticles() {
+      container.innerHTML = "";
+
+      const query = search.value.toLowerCase().trim();
+
+      const filtered = allArticles.filter(article => {
+        const matchesSearch =
+          article.title.toLowerCase().includes(query) ||
+          article.description.toLowerCase().includes(query);
+
+        const matchesCategory =
+          selectedCategory === "all" ||
+          article.categories.includes(selectedCategory);
+
+        return matchesSearch && matchesCategory;
+      });
+
+      if (!filtered.length) {
+        container.innerHTML =
+          '<div class="empty">No matching articles found.</div>';
+        return;
+      }
+
+      filtered.forEach(article => {
+        const card = document.createElement("article");
+        card.className = "article";
+
+        if (article.image) {
+          const img = document.createElement("img");
+          img.src = article.image;
+          img.alt = article.title;
+          img.loading = "lazy";
+          card.appendChild(img);
+        }
+
+        const content = document.createElement("div");
+        content.className = "article-content";
+
+        if (article.categories.length) {
+          const tag = document.createElement("span");
+          tag.className = "article-category";
+          tag.textContent = article.categories[0];
+          content.appendChild(tag);
+        }
+
+        const heading = document.createElement("h3");
+        heading.textContent = article.title;
+
+        const date = document.createElement("div");
+        date.className = "article-date";
+        date.textContent = article.date;
+
+        const description = document.createElement("p");
+        description.textContent =
+          article.description || "Read the full story.";
+
+        const link = document.createElement("a");
+        link.className = "read-more";
+        link.href = article.link;
+        link.target = "_blank";
+        link.rel = "noopener noreferrer";
+        link.textContent = "Read More";
+
+        content.append(heading, date, description, link);
+        card.appendChild(content);
+        container.appendChild(card);
+      });
+    }
+
+    categories.addEventListener("click", function(event) {
+      const button = event.target.closest(".category-btn");
+
+      if (!button) return;
+
+      selectedCategory = button.dataset.category;
+      updateCategoryButtons();
+      renderArticles();
+    });
+
+    search.addEventListener("input", renderArticles);
+
     window.bloggerFeedCallback = function(data) {
       try {
         const entries = data.feed?.entry || [];
 
-        container.innerHTML = "";
-
-        if (!entries.length) {
-          status.textContent = "No articles found.";
-          return;
-        }
-
-        entries.forEach(entry => {
-          const title = entry.title?.$t || "Untitled article";
-
-          const link = entry.link?.find(item =>
-            item.rel === "alternate"
-          )?.href;
-
-          if (!link) return;
-
-          const summaryHTML =
+        allArticles = entries.map(entry => {
+          const html =
             entry.summary?.$t ||
             entry.content?.$t ||
             "";
 
-          const parser = new DOMParser();
-          const doc = parser.parseFromString(
-            summaryHTML,
+          const doc = new DOMParser().parseFromString(
+            html,
             "text/html"
           );
-
-          const description =
-            (doc.body.textContent || "")
-              .replace(/\s+/g, " ")
-              .trim()
-              .slice(0, 160);
 
           let image = entry.media$thumbnail?.url || "";
 
           if (!image) {
-            const firstImage = doc.querySelector("img");
-            if (firstImage) {
-              image = firstImage.src;
-            }
+            image = doc.querySelector("img")?.src || "";
           }
-
-          const card = document.createElement("article");
-          card.className = "article";
 
           if (image) {
-            const img = document.createElement("img");
-            img.src = image;
-            img.alt = title;
-            img.loading = "lazy";
-            card.appendChild(img);
+            image = image.replace(
+              /\/s[0-9]+(-c)?\//,
+              "/s800/"
+            );
           }
 
-          const content = document.createElement("div");
-          content.className = "article-content";
+          const link = entry.link?.find(item =>
+            item.rel === "alternate"
+          )?.href || "";
 
-          const heading = document.createElement("h2");
-          heading.textContent = title;
+          return {
+            title: entry.title?.$t || "Untitled article",
+            description: cleanText(html).slice(0, 180),
+            image,
+            link,
+            date: formatDate(entry.published?.$t),
+            categories: (entry.category || []).map(
+              item => item.term
+            )
+          };
+        }).filter(article => article.link);
 
-          const paragraph = document.createElement("p");
-          paragraph.textContent = description || "Read the full story.";
+        showCategories();
 
-          const anchor = document.createElement("a");
-          anchor.href = link;
-          anchor.target = "_blank";
-          anchor.rel = "noopener noreferrer";
-          anchor.textContent = "Read More";
+        status.textContent =
+          allArticles.length + " articles available";
 
-          content.append(heading, paragraph, anchor);
-          card.appendChild(content);
-          container.appendChild(card);
-        });
-
-        status.textContent = "Latest articles";
+        renderArticles();
 
       } catch (error) {
         status.textContent = "Unable to display articles.";
       }
     };
 
-    const script = document.createElement("script");
+    const feedScript = document.createElement("script");
 
-    script.src =
+    feedScript.src =
       "https://farrarh2.blogspot.com/feeds/posts/default" +
-      "?alt=json-in-script&max-results=15" +
+      "?alt=json-in-script&max-results=30" +
       "&callback=bloggerFeedCallback";
 
-    script.onerror = function() {
+    feedScript.onerror = function() {
       status.textContent =
         "Unable to load articles. Please try again later.";
     };
 
-    document.body.appendChild(script);
+    document.body.appendChild(feedScript);
 
     // Monetag automatic in-app interstitial
     window.addEventListener("load", function() {
