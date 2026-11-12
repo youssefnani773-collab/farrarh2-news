@@ -16,37 +16,89 @@
   </script>
 
   <style>
+    * {
+      box-sizing: border-box;
+    }
+
     body {
       font-family: Arial, sans-serif;
       margin: 0;
-      padding: 20px;
+      padding: 15px;
       background: #f4f5f7;
       color: #222;
     }
+
     header {
       background: #17212b;
       color: white;
-      padding: 22px;
+      padding: 22px 15px;
       border-radius: 14px;
       text-align: center;
+      margin-bottom: 20px;
     }
+
+    header h1 {
+      margin: 0 0 8px;
+      font-size: 25px;
+    }
+
+    header p {
+      margin: 0;
+      color: #d5e0e9;
+    }
+
     .article {
       background: white;
-      padding: 16px;
-      margin: 15px 0;
+      margin: 16px 0;
       border-radius: 12px;
+      overflow: hidden;
       box-shadow: 0 2px 8px #00000012;
     }
-    .article h2 { font-size: 18px; }
+
+    .article img {
+      width: 100%;
+      height: 200px;
+      object-fit: cover;
+      display: block;
+    }
+
+    .article-content {
+      padding: 15px;
+    }
+
+    .article h2 {
+      font-size: 19px;
+      line-height: 1.4;
+      margin: 0 0 10px;
+    }
+
+    .article p {
+      color: #666;
+      font-size: 14px;
+      line-height: 1.6;
+      margin: 0 0 14px;
+    }
+
     .article a {
-      color: #168acd;
+      display: inline-block;
+      background: #168acd;
+      color: white;
+      padding: 10px 16px;
+      border-radius: 7px;
       text-decoration: none;
       font-weight: bold;
     }
-    #status { text-align: center; color: #666; }
+
+    #status {
+      text-align: center;
+      color: #666;
+      padding: 15px;
+    }
   </style>
 </head>
+
 <body>
+
   <header>
     <h1>Farrarh2 News</h1>
     <p>Latest news and trending stories</p>
@@ -63,65 +115,128 @@
       tg.expand();
     }
 
-    const feedUrl =
-      "https://farrarh2.blogspot.com/feeds/posts/default?alt=json&max-results=15";
+    const container = document.getElementById("articles");
+    const status = document.getElementById("status");
 
-    fetch(feedUrl)
-      .then(response => {
-        if (!response.ok) throw new Error("Feed unavailable");
-        return response.json();
-      })
-      .then(data => {
-        const entries = data.feed.entry || [];
-        const container = document.getElementById("articles");
+    // Blogger JSONP feed
+    window.bloggerFeedCallback = function(data) {
+      try {
+        const entries = data.feed?.entry || [];
 
-        document.getElementById("status").textContent =
-          entries.length ? "Latest articles" : "No articles found";
+        container.innerHTML = "";
+
+        if (!entries.length) {
+          status.textContent = "No articles found.";
+          return;
+        }
 
         entries.forEach(entry => {
-          const title = entry.title.$t;
-          const link = entry.link.find(item =>
+          const title = entry.title?.$t || "Untitled article";
+
+          const link = entry.link?.find(item =>
             item.rel === "alternate"
           )?.href;
 
           if (!link) return;
 
+          const summaryHTML =
+            entry.summary?.$t ||
+            entry.content?.$t ||
+            "";
+
+          const parser = new DOMParser();
+          const doc = parser.parseFromString(
+            summaryHTML,
+            "text/html"
+          );
+
+          const description =
+            (doc.body.textContent || "")
+              .replace(/\s+/g, " ")
+              .trim()
+              .slice(0, 160);
+
+          let image = entry.media$thumbnail?.url || "";
+
+          if (!image) {
+            const firstImage = doc.querySelector("img");
+            if (firstImage) {
+              image = firstImage.src;
+            }
+          }
+
           const card = document.createElement("article");
           card.className = "article";
 
+          if (image) {
+            const img = document.createElement("img");
+            img.src = image;
+            img.alt = title;
+            img.loading = "lazy";
+            card.appendChild(img);
+          }
+
+          const content = document.createElement("div");
+          content.className = "article-content";
+
           const heading = document.createElement("h2");
           heading.textContent = title;
+
+          const paragraph = document.createElement("p");
+          paragraph.textContent = description || "Read the full story.";
 
           const anchor = document.createElement("a");
           anchor.href = link;
           anchor.target = "_blank";
           anchor.rel = "noopener noreferrer";
-          anchor.textContent = "Read Article";
+          anchor.textContent = "Read More";
 
-          card.append(heading, anchor);
+          content.append(heading, paragraph, anchor);
+          card.appendChild(content);
           container.appendChild(card);
         });
-      })
-      .catch(() => {
-        document.getElementById("status").textContent =
-          "Unable to load articles. Please try again later.";
-      });
+
+        status.textContent = "Latest articles";
+
+      } catch (error) {
+        status.textContent = "Unable to display articles.";
+      }
+    };
+
+    const script = document.createElement("script");
+
+    script.src =
+      "https://farrarh2.blogspot.com/feeds/posts/default" +
+      "?alt=json-in-script&max-results=15" +
+      "&callback=bloggerFeedCallback";
+
+    script.onerror = function() {
+      status.textContent =
+        "Unable to load articles. Please try again later.";
+    };
+
+    document.body.appendChild(script);
 
     // Monetag automatic in-app interstitial
-    window.addEventListener("load", () => {
+    window.addEventListener("load", function() {
       if (typeof window.show_12243195 === "function") {
-        window.show_12243195({
-          type: "inApp",
-          inAppSettings: {
-            frequency: 2,
-            capping: 0.1,
-            interval: 30,
-            timeout: 5,
-            everyPage: false
-          }
-        });
+        try {
+          window.show_12243195({
+            type: "inApp",
+            inAppSettings: {
+              frequency: 2,
+              capping: 0.1,
+              interval: 30,
+              timeout: 5,
+              everyPage: false
+            }
+          });
+        } catch (error) {
+          console.log("Monetag could not start.");
+        }
       }
     });
   </script>
+
 </body>
 </html>
